@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<!-- Note: Using simple inclusion approach if th:replace fragment syntax above is confusing, but let's stick to fragment inclusion in body -->
+
+<head th:replace="~{layout :: header('Dashboard')}"></head>
+
+<body>
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Bienvenue sur School Management</h1>
+                <p class="col-md-8 fs-4">Cette application permet de gérer les étudiants, les cours et les notes.</p>
+                <div sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-primary btn-lg" href="/login" role="button">Se connecter</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-md-stretch" sec:authorize="isAuthenticated()">
+            <div class="col-md-6">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <h2>Gestion Etudiants</h2>
+                    <p>Ajouter, modifier ou supprimer des étudiants.</p>
+                    <a href="/etudiants" class="btn btn-outline-light" type="button">Gérer</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="h-100 p-5 bg-light border rounded-3">
+                    <h2>Gestion Cours</h2>
+                    <p>Planifier et gérer les cours.</p>
+                    <a href="/cours" class="btn btn-outline-secondary" type="button">Gérer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>
