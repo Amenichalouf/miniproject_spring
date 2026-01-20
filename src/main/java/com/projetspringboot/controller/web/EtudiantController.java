@@ -23,14 +23,14 @@ public class EtudiantController {
     @GetMapping
     public String listEtudiants(Model model) {
         model.addAttribute("etudiants", etudiantService.getAllEtudiants());
-        return "etudiants/list";
+        return "etudiants/listEtudiants";
     }
 
     @GetMapping("/new")
     public String createEtudiantForm(Model model) {
         model.addAttribute("etudiant", new Etudiant());
         // model.addAttribute("groupes", groupeService.getAllGroupes());
-        return "etudiants/form";
+        return "etudiants/addEtudiant";
     }
 
     @PostMapping

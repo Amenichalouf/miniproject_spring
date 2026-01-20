@@ -24,14 +24,14 @@ public class CoursController {
     @GetMapping
     public String listCours(Model model) {
         model.addAttribute("coursList", coursService.getAllCours());
-        return "cours/list";
+        return "cours/listCours";
     }
 
     @GetMapping("/new")
     public String createCoursForm(Model model) {
         model.addAttribute("cours", new Cours());
         model.addAttribute("formateurs", formateurService.getAllFormateurs());
-        return "cours/form";
+        return "cours/addCour";
     }
 
     @PostMapping
