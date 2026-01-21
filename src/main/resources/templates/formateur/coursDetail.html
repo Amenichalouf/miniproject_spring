@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Détail du cours')"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 th:text="${cours.titre}">Cours</h2>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" href="/formateur/dashboard">Retour</a>
+            <a class="btn btn-primary btn-sm" th:href="@{'/formateur/cours/' + ${cours.id} + '/edit'}">Modifier</a>
+        </div>
+    </div>
+    <p><strong>Code:</strong> <span th:text="${cours.code}">CODE</span></p>
+    <p><strong>Description:</strong></p>
+    <p th:text="${cours.description}">Description</p>
+    <p><strong>Contenu:</strong></p>
+    <pre th:text="${cours.contenu}">Contenu</pre>
+    <hr/>
+    <div class="mt-3">
+        <a class="btn btn-sm btn-outline-primary" th:href="@{'/formateur/cours/' + ${cours.id} + '/etudiants'}">Étudiants inscrits</a>
+        <a class="btn btn-sm btn-outline-primary" th:href="@{'/formateur/cours/' + ${cours.id} + '/notes'}">Notes & Statistiques</a>
+        <a class="btn btn-sm btn-outline-primary" th:href="@{'/formateur/cours/' + ${cours.id} + '/bulletin'}">Bulletin</a>
+        <a class="btn btn-sm btn-outline-primary" th:href="@{'/formateur/cours/' + ${cours.id} + '/annonces'}">Annonces</a>
+    </div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Profil étudiant')"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Profil de l'étudiant</h2>
+        <a class="btn btn-outline-secondary btn-sm" th:href="@{'/formateur/cours/' + ${coursId} + '/etudiants'}">Retour</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Nom:</strong> <span th:text="${etudiant.nom}">Nom</span></p>
+            <p><strong>Prénom:</strong> <span th:text="${etudiant.prenom}">Prénom</span></p>
+            <p><strong>Email:</strong> <span th:text="${etudiant.email}">email</span></p>
+            <p><strong>Matricule:</strong> <span th:text="${etudiant.matricule}">matricule</span></p>
+            <p><strong>Groupe:</strong> <span th:text="${etudiant.groupe != null ? etudiant.groupe.nom : '—'}">groupe</span></p>
+        </div>
+    </div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>
+

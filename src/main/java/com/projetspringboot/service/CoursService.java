@@ -13,4 +13,6 @@ public interface CoursService {
     Cours saveCours(Cours cours);
 
     void deleteCours(Long id);
+
+    List<Cours> getCoursByFormateur(Long formateurId);
 }

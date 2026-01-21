@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Espace Formateur')"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Espace Formateur</h2>
+    </div>
+
+    <h4>Mes cours</h4>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="c : ${mesCours}">
+            <span>
+                <strong th:text="${c.titre}">Titre</strong>
+                <small class="text-muted ms-2" th:text="${c.code}">CODE</small>
+                <small class="badge bg-info ms-2">Inscrits: <span th:text="${#lists.size(c.inscriptions)}">0</span></small>
+            </span>
+            <div class="btn-group">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{'/formateur/cours/' + ${c.id}}">Détails</a>
+                <a class="btn btn-sm btn-primary" th:href="@{'/formateur/cours/' + ${c.id} + '/etudiants'}">Gérer les notes</a>
+            </div>
+        </li>
+    </ul>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

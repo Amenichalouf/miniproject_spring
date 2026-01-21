@@ -37,7 +37,11 @@ public class InscriptionServiceImpl implements InscriptionService {
         Cours cours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new RuntimeException("Cours non trouvé"));
 
-        // TODO: Check for existing inscription to avoid duplicates?
+        // Vérifier si l'inscription existe déjà pour éviter les doublons
+        inscriptionRepository.findByEtudiantIdAndCoursId(etudiantId, coursId)
+                .ifPresent(existing -> {
+                    throw new IllegalStateException("L'étudiant est déjà inscrit à ce cours");
+                });
 
         Inscription inscription = new Inscription();
         inscription.setEtudiant(etudiant);

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Bulletin du cours')"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Bulletin</h2>
+        <a class="btn btn-outline-secondary btn-sm" th:href="@{'/formateur/cours/' + ${coursId}}">Retour</a>
+    </div>
+    <p><strong>Moyenne du cours:</strong> <span th:text="${moyenne}">0.0</span></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Étudiant</th>
+            <th>Note</th>
+            <th>Commentaire</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="n : ${notes}">
+            <td th:text="${n.etudiant.nom + ' ' + n.etudiant.prenom}">Nom Prénom</td>
+            <td th:text="${n.valeur}">0</td>
+            <td th:text="${n.commentaire}">-</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>
+

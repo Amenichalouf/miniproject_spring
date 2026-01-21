@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: head('Espace Étudiant')"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Espace Étudiant</h2>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm" href="/etudiant/notes">Mes notes</a>
+        </div>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <h4 class="mt-4">Cours disponibles</h4>
+    <div class="row">
+        <div class="col-md-4 mb-3" th:each="cours : ${coursList}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${cours.titre}">Titre</h5>
+                    <p class="card-text" th:text="${cours.description}">Description</p>
+                    <form th:action="@{'/etudiant/inscrire/' + ${cours.id}}" method="post">
+                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-5">Mes cours</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Cours</th>
+            <th>Inscrit le</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ins : ${mesInscriptions}">
+            <td th:text="${ins.cours.titre}">Cours</td>
+            <td th:text="${#dates.format(ins.dateInscription, 'dd/MM/yyyy')}">Date</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-outline-secondary" href="/">Retour</a>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

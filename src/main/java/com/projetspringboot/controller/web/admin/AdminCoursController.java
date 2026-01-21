@@ -1,0 +1,59 @@
+package com.projetspringboot.controller.web.admin;
+
+import com.projetspringboot.entity.Cours;
+import com.projetspringboot.service.CoursService;
+import com.projetspringboot.service.FormateurService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/admin/cours")
+public class AdminCoursController {
+
+    private final CoursService coursService;
+    private final FormateurService formateurService;
+
+    @Autowired
+    public AdminCoursController(CoursService coursService, FormateurService formateurService) {
+        this.coursService = coursService;
+        this.formateurService = formateurService;
+    }
+
+    @GetMapping
+    public String listCours(Model model) {
+        model.addAttribute("coursList", coursService.getAllCours());
+        return "cours/listCours";
+    }
+
+    @GetMapping("/new")
+    public String createCoursForm(Model model) {
+        model.addAttribute("cours", new Cours());
+        model.addAttribute("formateurs", formateurService.getAllFormateurs());
+        return "cours/addCour";
+    }
+
+    @PostMapping
+    public String saveCours(@ModelAttribute Cours cours,
+            @RequestParam(value = "formateurId", required = false) Long formateurId) {
+        if (formateurId != null) {
+            cours.setFormateur(formateurService.getFormateurById(formateurId).orElse(null));
+        }
+        coursService.saveCours(cours);
+        return "redirect:/admin/cours";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editCoursForm(@PathVariable Long id, Model model) {
+        model.addAttribute("cours", coursService.getCoursById(id).orElseThrow());
+        model.addAttribute("formateurs", formateurService.getAllFormateurs());
+        return "cours/addCour";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCours(@PathVariable Long id) {
+        coursService.deleteCours(id);
+        return "redirect:/admin/cours";
+    }
+}

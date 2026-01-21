@@ -40,4 +40,9 @@ public class CoursServiceImpl implements CoursService {
     public void deleteCours(Long id) {
         coursRepository.deleteById(id);
     }
+
+    @Override
+    public List<Cours> getCoursByFormateur(Long formateurId) {
+        return coursRepository.findByFormateurId(formateurId);
+    }
 }

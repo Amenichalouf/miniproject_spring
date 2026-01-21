@@ -24,6 +24,9 @@ public class Cours {
 
     private String description;
 
+    @Lob
+    private String contenu;
+
     @ManyToOne
     @JoinColumn(name = "formateur_id")
     private Formateur formateur;

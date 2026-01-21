@@ -36,11 +36,21 @@ public class NoteServiceImpl implements NoteService {
         Cours cours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new RuntimeException("Cours non trouvé"));
 
-        Note note = new Note();
-        note.setEtudiant(etudiant);
-        note.setCours(cours);
-        note.setValeur(valeur);
-        note.setCommentaire(commentaire);
+        // Mettre à jour la note existante si présente, sinon créer
+        Note note = noteRepository.findByEtudiantIdAndCoursId(etudiantId, coursId)
+                .map(existing -> {
+                    existing.setValeur(valeur);
+                    existing.setCommentaire(commentaire);
+                    return existing;
+                })
+                .orElseGet(() -> {
+                    Note n = new Note();
+                    n.setEtudiant(etudiant);
+                    n.setCours(cours);
+                    n.setValeur(valeur);
+                    n.setCommentaire(commentaire);
+                    return n;
+                });
 
         return noteRepository.save(note);
     }
