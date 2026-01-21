@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head(title='Tableau de bord Admin')}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: header}"></nav>
+
+    <main class="container">
+        <div class="p-5 text-center bg-light rounded-3 mb-4 shadow-sm">
+            <h1 class="display-5 fw-bold text-primary">Tableau de bord Administrateur</h1>
+            <p class="fs-4 text-muted">Bienvenue dans l'espace d'administration de SchoolManager.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Étudiants -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3 text-primary">
+                            <i class="bi bi-people-fill fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Étudiants</h3>
+                        <p class="card-text text-muted">Gérer les inscriptions, les profils et les groupes.</p>
+                        <a href="/etudiants" class="btn btn-primary w-100">Gérer les étudiants</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formateurs -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3 text-success">
+                            <i class="bi bi-person-video3 fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Formateurs</h3>
+                        <p class="card-text text-muted">Gérer les formateurs et leurs spécialités.</p>
+                        <a href="/formateurs" class="btn btn-success w-100">Gérer les formateurs</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cours -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3 text-warning">
+                            <i class="bi bi-book-half fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Cours</h3>
+                        <p class="card-text text-muted">Gérer les cours, les programmes et les affectations.</p>
+                        <a href="/cours" class="btn btn-warning w-100 text-white">Gérer les cours</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{layout :: footer}"></div>
+
+</body>
+
+</html>

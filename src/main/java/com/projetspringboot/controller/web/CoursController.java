@@ -35,7 +35,11 @@ public class CoursController {
     }
 
     @PostMapping
-    public String saveCours(@ModelAttribute Cours cours) {
+    public String saveCours(@ModelAttribute Cours cours,
+            @RequestParam(value = "formateurId", required = false) Long formateurId) {
+        if (formateurId != null) {
+            cours.setFormateur(formateurService.getFormateurById(formateurId).orElse(null));
+        }
         coursService.saveCours(cours);
         return "redirect:/cours";
     }
@@ -44,7 +48,7 @@ public class CoursController {
     public String editCoursForm(@PathVariable Long id, Model model) {
         model.addAttribute("cours", coursService.getCoursById(id).orElseThrow());
         model.addAttribute("formateurs", formateurService.getAllFormateurs());
-        return "cours/form";
+        return "cours/addCour";
     }
 
     @GetMapping("/delete/{id}")

@@ -24,10 +24,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email : " + email));
 
+        String role = utilisateur.getRole() != null ? utilisateur.getRole().name() : "ETUDIANT";
+        String password = utilisateur.getPassword() != null ? utilisateur.getPassword() : "";
+
         return User.builder()
                 .username(utilisateur.getEmail())
-                .password(utilisateur.getPassword())
-                .roles(utilisateur.getRole().name())
+                .password(password)
+                .roles(role)
                 .build();
     }
 }

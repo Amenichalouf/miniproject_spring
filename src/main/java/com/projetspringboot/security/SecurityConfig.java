@@ -1,5 +1,6 @@
 package com.projetspringboot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,22 +13,25 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll() // Allow H2 Console
-                        .requestMatchers("/api/**").permitAll() // TODO: Secure API later
+                        .requestMatchers("/h2-console/**", "/api/**").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/", true))
+                        .successHandler(customAuthenticationSuccessHandler)
+                        .permitAll())
                 .logout((logout) -> logout.permitAll())
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**")) // Disable CSRF for H2 and API
-                                                                                         // locally
-                .headers(headers -> headers.frameOptions(frame -> frame.disable())); // Allow frames for H2
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
     }

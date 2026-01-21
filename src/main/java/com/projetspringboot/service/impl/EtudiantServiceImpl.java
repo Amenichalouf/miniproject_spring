@@ -15,10 +15,13 @@ import java.util.Optional;
 public class EtudiantServiceImpl implements EtudiantService {
 
     private final EtudiantRepository etudiantRepository;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EtudiantServiceImpl(EtudiantRepository etudiantRepository) {
+    public EtudiantServiceImpl(EtudiantRepository etudiantRepository,
+            org.springframework.security.crypto.password.PasswordEncoder passwordEncoder) {
         this.etudiantRepository = etudiantRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,7 +36,33 @@ public class EtudiantServiceImpl implements EtudiantService {
 
     @Override
     public Etudiant saveEtudiant(Etudiant etudiant) {
-        // TODO: Password encoding and logic
+        if (etudiant.getId() != null) {
+            // Update mode
+            Etudiant existing = etudiantRepository.findById(etudiant.getId())
+                    .orElseThrow(() -> new RuntimeException("Etudiant non trouvé"));
+
+            // Preserve password if not changed
+            if (etudiant.getPassword() == null || etudiant.getPassword().isEmpty()) {
+                etudiant.setPassword(existing.getPassword());
+            } else {
+                etudiant.setPassword(passwordEncoder.encode(etudiant.getPassword()));
+            }
+            // Preserve other fields if necessary or ensure they are in the form
+            if (etudiant.getRole() == null) {
+                etudiant.setRole(existing.getRole());
+            }
+        } else {
+            // Create mode
+            if (etudiant.getPassword() != null && !etudiant.getPassword().isEmpty()) {
+                etudiant.setPassword(passwordEncoder.encode(etudiant.getPassword()));
+            }
+            if (etudiant.getRole() == null) {
+                etudiant.setRole(com.projetspringboot.entity.Role.ETUDIANT);
+            }
+            if (etudiant.getDateInscriptionEcole() == null) {
+                etudiant.setDateInscriptionEcole(new java.util.Date());
+            }
+        }
         return etudiantRepository.save(etudiant);
     }
 

@@ -39,7 +39,7 @@ public class FormateurController {
     @GetMapping("/edit/{id}")
     public String editFormateurForm(@PathVariable Long id, Model model) {
         model.addAttribute("formateur", formateurService.getFormateurById(id).orElseThrow());
-        return "formateurs/form";
+        return "formateurs/addFormateur";
     }
 
     @GetMapping("/delete/{id}")
