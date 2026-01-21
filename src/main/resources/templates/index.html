@@ -2,16 +2,525 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil</title>
+    <title>Gestion Scolaire - Accueil</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .btn-hero {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #4e73df, #6c8ce4);
+            border: none;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0 5px 20px rgba(78, 115, 223, 0.4);
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(78, 115, 223, 0.6);
+            color: white;
+        }
+
+        .features-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2e3a4e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-feature {
+            border: none;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-top: 5px solid;
+        }
+
+        .card-feature:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-feature.cours {
+            border-top-color: var(--primary-color);
+        }
+
+        .card-feature.etudiants {
+            border-top-color: var(--success-color);
+        }
+
+        .card-feature.formateurs {
+            border-top-color: var(--info-color);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 35px;
+            color: white;
+        }
+
+        .cours .card-icon {
+            background: linear-gradient(45deg, #4e73df, #6c8ce4);
+        }
+
+        .etudiants .card-icon {
+            background: linear-gradient(45deg, #1cc88a, #3dd89f);
+        }
+
+        .formateurs .card-icon {
+            background: linear-gradient(45deg, #36b9cc, #5cc9d5);
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #2e3a4e;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            color: #6c757d;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .btn-feature {
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+        }
+
+        .cours .btn-feature {
+            background: var(--primary-color);
+        }
+
+        .etudiants .btn-feature {
+            background: var(--success-color);
+        }
+
+        .formateurs .btn-feature {
+            background: var(--info-color);
+        }
+
+        .btn-feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        footer {
+            background: #2e3a4e;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            color: #8a94a6;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        /* Animation pour le hero */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1, .hero-content p, .hero-content .btn-hero {
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-content h1 { animation-delay: 0.2s; }
+        .hero-content p { animation-delay: 0.4s; }
+        .hero-content .btn-hero { animation-delay: 0.6s; }
+
+        /* Animation pour les cartes */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInScale 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .btn-hero {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Flèche vers le bas */
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Particules animées en arrière-plan */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-<h1>Bienvenue sur mon application Spring Boot</h1>
-<p>Application de gestion scolaire</p>
+<!-- Hero Section avec belle image de fond -->
+<section class="hero-section">
+    <!-- Particules animées -->
+    <div class="particles" id="particles"></div>
 
-<ul>
-    <li><a href="/cours">Gestion des cours</a></li>
-    <li><a href="/etudiants">Gestion des étudiants</a></li>
-    <li><a href="/formateurs">Gestion des formateurs</a></li>
-</ul>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestion Scolaire Simplifiée</h1>
+            <p class="hero-subtitle">
+                Une plateforme intuitive et puissante pour gérer efficacement votre établissement scolaire.
+                Gérez les étudiants, les formateurs et les cours en toute simplicité.
+            </p>
+            <a href="#features" class="btn btn-hero">
+                <i class="fas fa-rocket me-2"></i>Découvrir les fonctionnalités
+            </a>
+        </div>
+    </div>
+
+    <!-- Flèche pour descendre -->
+    <div class="scroll-down" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title">Fonctionnalités Principales</h2>
+                <p class="section-subtitle">
+                    Tout ce dont vous avez besoin pour une gestion scolaire efficace et moderne
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-5 justify-content-center">
+            <!-- Cours Card -->
+            <div class="col-lg-4 col-md-6 feature-card">
+                <div class="card card-feature cours">
+                    <div class="card-body text-center p-5">
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="card-title">Gestion des Cours</h3>
+                        <p class="card-text">
+                            Créez, modifiez et gérez l'ensemble des cours de votre établissement.
+                            Attribuez des codes uniques, des descriptions détaillées et associez les formateurs compétents.
+                        </p>
+                        <a href="/cours" class="btn btn-feature">
+                            <i class="fas fa-arrow-right me-2"></i>Accéder aux cours
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étudiants Card -->
+            <div class="col-lg-4 col-md-6 feature-card">
+                <div class="card card-feature etudiants">
+                    <div class="card-body text-center p-5">
+                        <div class="card-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="card-title">Gestion des Étudiants</h3>
+                        <p class="card-text">
+                            Gérez les inscriptions, les matricules, les groupes et toutes les informations personnelles.
+                            Suivez la progression académique de chaque étudiant.
+                        </p>
+                        <a href="/etudiants" class="btn btn-feature">
+                            <i class="fas fa-arrow-right me-2"></i>Voir les étudiants
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formateurs Card -->
+            <div class="col-lg-4 col-md-6 feature-card">
+                <div class="card card-feature formateurs">
+                    <div class="card-body text-center p-5">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="card-title">Gestion des Formateurs</h3>
+                        <p class="card-text">
+                            Administrez l'équipe pédagogique, leurs spécialités et les cours assignés.
+                            Optimisez la répartition des enseignements.
+                        </p>
+                        <a href="/formateurs" class="btn btn-feature">
+                            <i class="fas fa-arrow-right me-2"></i>Voir les formateurs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer simple -->
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <i class="fas fa-graduation-cap me-2"></i>Gestion Scolaire
+        </div>
+        <p>Plateforme de gestion développée avec Spring Boot</p>
+        <div class="copyright">
+            &copy; 2024 Gestion Scolaire. Tous droits réservés.
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Animation des particules
+    document.addEventListener('DOMContentLoaded', function() {
+        const particlesContainer = document.getElementById('particles');
+
+        // Créer des particules
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // Taille aléatoire
+            const size = Math.random() * 10 + 5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+
+            // Position aléatoire
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+
+            // Opacité aléatoire
+            particle.style.opacity = Math.random() * 0.3 + 0.1;
+
+            particlesContainer.appendChild(particle);
+
+            // Animation de déplacement
+            animateParticle(particle);
+        }
+
+        function animateParticle(particle) {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let speedX = (Math.random() - 0.5) * 0.5;
+            let speedY = (Math.random() - 0.5) * 0.5;
+
+            function move() {
+                x += speedX;
+                y += speedY;
+
+                // Rebond sur les bords
+                if (x <= 0 || x >= 100) speedX = -speedX;
+                if (y <= 0 || y >= 100) speedY = -speedY;
+
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+
+                requestAnimationFrame(move);
+            }
+
+            move();
+        }
+
+        // Animation au défilement pour les cartes
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'scale(1)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        featureCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Scroll doux pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

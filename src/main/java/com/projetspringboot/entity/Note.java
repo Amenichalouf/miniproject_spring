@@ -26,5 +26,5 @@ public class Note {
     @Column(nullable = false)
     private Double valeur; // Sur 20 par exemple
 
-    private String commentaire;
+
 }

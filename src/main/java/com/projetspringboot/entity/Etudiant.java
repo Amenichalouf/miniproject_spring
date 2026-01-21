@@ -1,5 +1,6 @@
 package com.projetspringboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +21,7 @@ public class Etudiant extends Utilisateur {
     private String matricule;
 
     @Temporal(TemporalType.DATE)
-    private Date dateInscriptionEcole;
+    private Date dateInscription;
 
     @ManyToOne
     @JoinColumn(name = "groupe_id")
@@ -28,4 +29,7 @@ public class Etudiant extends Utilisateur {
 
     @OneToMany(mappedBy = "etudiant")
     private List<Inscription> inscriptions;
+
+    
+
 }

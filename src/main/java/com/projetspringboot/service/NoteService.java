@@ -5,7 +5,7 @@ import com.projetspringboot.entity.Note;
 import java.util.List;
 
 public interface NoteService {
-    Note addNote(Long etudiantId, Long coursId, Double valeur, String commentaire);
+    Note addNote(Long etudiantId, Long coursId, Double valeur);
 
     List<Note> getNotesByEtudiant(Long etudiantId);
 

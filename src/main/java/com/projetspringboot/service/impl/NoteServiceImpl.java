@@ -30,7 +30,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note addNote(Long etudiantId, Long coursId, Double valeur, String commentaire) {
+    public Note addNote(Long etudiantId, Long coursId, Double valeur) {
         Etudiant etudiant = etudiantRepository.findById(etudiantId)
                 .orElseThrow(() -> new RuntimeException("Etudiant non trouvé"));
         Cours cours = coursRepository.findById(coursId)
@@ -40,7 +40,6 @@ public class NoteServiceImpl implements NoteService {
         note.setEtudiant(etudiant);
         note.setCours(cours);
         note.setValeur(valeur);
-        note.setCommentaire(commentaire);
 
         return noteRepository.save(note);
     }

@@ -31,7 +31,7 @@ public class CoursController {
     public String createCoursForm(Model model) {
         model.addAttribute("cours", new Cours());
         model.addAttribute("formateurs", formateurService.getAllFormateurs());
-        return "cours/addCour";
+        return "cours/form";
     }
 
     @PostMapping

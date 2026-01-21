@@ -17,6 +17,5 @@ public class Formateur extends Utilisateur {
 
     private String specialite;
 
-    @OneToMany(mappedBy = "formateur")
-    private List<Cours> coursEnseignes;
+
 }
